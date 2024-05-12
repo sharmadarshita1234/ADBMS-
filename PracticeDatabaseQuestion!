@@ -1,0 +1,62 @@
+Practice Database SQL Questions 1
+
+Tables give:
+1. emp(eno, ename, bdate, title, salary, dno)
+2. proj(pno, pname, budget, dno)
+3. dept(dno, dname, mgreno)
+4. workson(eno, pno, resp, hours)
+
+Questions-
+Q1. Write an SQL Query that returns project number and name for projects with budget greater than $100,000.
+Ans1. SELECT pno, pname
+      FROM proj
+      WHERE budget>100000
+
+Q2. Write an SQL Query that returns all works on recorde where hours worked is less than 10 & the responsibility is 'Manager'.
+Ans2. SELECT * 
+      FROM workson    
+      WHERE hours<19 AND resp='Manager'
+
+Q3. Write an SQL Query that returns the employees number and name only who have a title of 'EE' or 'SA' and make more than $35000
+Ans3. SELECT eno, ename
+      FROM emp
+      WHERE (title='EE' OR title='SA')
+      AND salary>35000
+
+Q4. Write an SQL Query that returns the employees (name only) in department 'D1' ordered by decreasing salary.
+Ans4. SELECT ename
+      FROM emp
+      WHERE dno='D1'
+      ORDER BY salary DESC
+
+Q5. Write an SQL Query that returns the departments (all fields) ordered by ascending department name.
+Ans5. SELECT *
+      FROM dept
+      ORDER BY dname ASC
+
+Q6. Write an SQL Query that returns the employee name, department name and employee title.
+Ans6. SELECT ename, dname, title
+      FROM emp, dept
+      WHERE emp.dno=dept.dno
+
+Q7. Write an SQL Query that returns the project name, hours worked and project number for all works on records where hours>10.
+Ans7. SELECT pname, hours, proj.pno
+      FROM workson, proj
+      WHERE hours>10 AND proj.pno=workson.pno
+
+Q8. Write an SQL Query that returns the project name, department name and budget for all projects with a budget<$50000.
+Ans8. SELECT pname, dname, budget
+      FROM proj, dept
+      WHERE budget<50000 AND proj.dno=dept.dno
+
+Q9. Write an SQL Query that returns the employee numbers and salaries of all employees in the 'Consulting' department ordered by descending salary.
+Ans9. SELECT eno, salary 
+      FROM emp, dept
+      WHERE dname='Consulting'
+      ORDER BY salary DESC
+
+Q10. Write an SQL Query that returns the employee name, project name, employee title and hours for all works on records.
+Ans10. SELECT ename, title, pname
+       FROM emp, proj, workson
+       WHERE emp.eno=workson.eno
+       AND proj.pno=workson.pno
