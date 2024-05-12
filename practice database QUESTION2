@@ -1,0 +1,96 @@
+Practice Database SQL Questions 2
+
+Tables given-
+1. salesman(s_id, name, city, commission)
+2. customer(c_id, c_name, city, grade, s_id)
+3. order(o_no, amt, o_date, c_id, s_id)
+
+Questions-
+
+Q1. Display name and commission of all salesmen
+Ans1. SELECT name, commission
+      FROM salesman
+
+Q2. Retrieve salesman id of all salesmen from orders table without any repeat.
+Ans2. SELECT DISTINCT s_id
+      FROM orders
+
+Q3. Display names and city of salesman who belongs to the city of Paris.
+Ans3. SELECT name, city
+      FROM salesman
+      WHERE city='Paris'
+
+Q4. DIsplay all the information for those customers with a grade of 200.
+Ans4. SELECT * 
+      FROM customer
+      WHERE grade=200
+
+Q5. Display order number, order date and purchase amount for orders which will be delivered by salesman of ID 5001.
+Ans5. SELECT o_no, o_date, amt
+      FROM orders
+      WHERE s_id=5001
+
+Q6. Display all customers who are either belongs to city New York or not had a grade above 100.
+Ans6. SELECT * 
+      FROM customer
+      WHERE city='NEW YORK' OR NOT grade>100
+
+Q7. Find those salesmen with all information who gets the commission within range of 0.10 and 0.12.
+Ans7. SELECT * 
+      FROM salesman 
+      WHERE commission BETWEEN 0.10 AND 0.12
+
+Q8. Find all those customers whose names are ending with the letter 'n'.
+Ans8. SELECT * 
+      FROM customer
+      WHERE c_name LIKE '%n'
+
+Q9. Find those salesman whose name containing the first character is 'N' and 4th character is 'l'.
+Ans9. SELECT *
+      FROM salesman
+      WHERE name LIKE 'N__l%'
+
+Q10. Find customers who does not get grade except NULL.
+Ans10. SELECT *
+       FROM customer 
+       WHERE grade IS NULL
+
+Q11. Find total purchase amount of all orders.
+Ans11. SELECT SUM(amt)
+       FROM orders
+
+Q12. Find number of salesman currently listing for all of their customers.
+Ans12. SELECT COUNT (DISTINCT s_id)
+       FROM orders
+
+Q13. Find highest grade for each of cities of customers.
+Ans13. SELECT city, MAX(grade)
+       FROM customer
+       GROUP BY city
+
+Q14. Find highest purchase amount ordered by each customer with their ID and highest amount.
+Ans14. SELECT c_id, MAX(amt)
+       FROM orders 
+       GROUP BY c_id
+
+Q15. Find highest purchase amount ordered by each customer on particular date with their ID, order date and purchase amount.
+Ans15. SELECT c_id, o_date, MAX(amt)
+       FROM orders
+       GROUP BY c_id, o_date
+
+Q16. Find highest purchase amount on a date '2012-08-17' for each salesman with their ID.
+Ans16. SELECT s_id, MAX(amt)
+       FROM orders 
+       WHERE o_date='2012-08-17
+       GROUP BY salesman_id
+
+Q17. Find highest purchase amount with customer ID & order date for only those customers who have the highest purchase amount in a day is more than 2000.
+Ans17. SELECT c_id, o_date, MAX(amt)
+       FROM orders
+       GROUP BY c_id, o_date
+       HAVING MAX(amt)>2000
+
+Q18. Write a SQL statement that counts all orders for a date August 17th 2012.
+Ans18. SELECT COUNT(*)
+       FROM orders
+       WHERE o_date='2012-08-17
