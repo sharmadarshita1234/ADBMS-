@@ -1,0 +1,86 @@
+Practice Database SQL Questions 3
+
+Tables given-
+1. salesman(s_id, name, city, commission)
+2. customer(c_id, c_name, city, grade, s_id)
+3. order(o_no, amt, o_date, c_id, s_id)
+
+Questions-
+
+Q1. Find the name and city of those customers and salesmen who lives in same city.
+Ans1. SELECT S.name C.c_name S.city
+      FROM salesman AS S customer AS C
+      WHERE S.city=C.city
+
+Q2. Find names of all customers along with salesman who works for them.
+Ans2. SELECT customer.c_name salesman.name
+      FROM customer salesman
+      WHERE salesman.s_id=customer.s_id
+
+Q3. Display all thsoe orders by customers not located in same cities where their salesmen live.
+Ans3. SELECT o_no c_name order.c_id order.s_id
+      FROM salesman customer order
+      WHERE customer.city<>salesman.city
+      AND order.c_id=customer.c_id
+      AND order.s_id=salesman.s_id
+
+Q4. Display all orders issued by salesman 'Paul Adam' from orders table.
+Ans4. SELECT * 
+      FROM order
+      WHERE s_id=    
+            ( SELECT s_id
+              FROM salesman
+              WHERE name='Paul Adam' )
+
+Q5. Display all orders which values are greater than the average order value of 10th October 2012.
+Ans5. SELECT * 
+      FROM order
+      WHERE amt>
+        ( SELECT AVG(amt)
+          FROM order
+          WHERE o.date='2012-10-10')
+
+Q6. Find all orders attributed to salesmen in Paris.
+Ans6. SELECT * 
+      FROM order
+      WHERE s_id IN 
+          ( SELECT s_id
+            FROM salesman
+            WHERE city='Paris' )
+
+Q7. Extract data from orders table for salesman who earned the maximum commission.
+Ans7. SELECT o_no, amt, o_date, s_id
+      FROM order
+      WHERE s_id IN
+          ( SELECT s_id
+            FROM salesman
+            WHERE commission=
+                ( SELECT MAX(commission)
+                  FROM salesman ) )
+
+Q8. Find name and ids of all salesmen who had more than one customer.
+Ans8. SELECT s_id name 
+      FROM salesman AS s
+      WHERE 1<
+        ( SELECT COUNT(*)
+          FROM customer AS c
+          WHERE c.s_id=s.s_id )
+
+Q9. Write query to find all salesman who worked for only one customer.
+Ans9. SELECT *
+      FROM salesman
+      WHERE s_id IN
+          ( SELECT DISTINCT s_id
+            FROM customer a
+            WHERE NOT EXISTS
+                ( SELECT * FROM customer b
+                  WHERE a.s_id=b.s_id
+                  AND a.c_name<>b.c_name ) )
+
+Q10. Display only those customers whose grades are in fact, higher than every customer in New York.
+Ans10. SELECT *
+       FROM customer
+       WHERE grade>ALL
+          ( SELECT grade 
+            FROM customer
+            WHERE city='New York' )
